@@ -24,7 +24,7 @@ class Core{
       //Delete the controller off of the url array
       unset($url[0]);
     }
-
+    
     //Instantiate the controller
     require_once '../app/controllers/'.$this->currentController.'.php';
     $this->currentController = new $this->currentController;
@@ -40,7 +40,7 @@ class Core{
 
     //Get any remaining values as params
     $this->params = $url ? array_values($url) : [];
-    
+
     //Call the method on the controller with the params
     call_user_func_array([$this->currentController,$this->currentMethod],$this->params);
   }

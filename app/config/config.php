@@ -8,7 +8,12 @@
   //App root
   define('APPROOT',dirname(dirname(__FILE__)));
   //URL Root
-  define('URLROOT','TODO');
+  define('URLROOT','http://localhost/shareposts');
   //Site Name
-  define('SITENAME','TODO');
+  define('SITENAME','Rekt');
+  //App version
+  define('APPVERSION','0.0.1');
+
+  //Other configs
+  define('USER_MINPASSLEN',6);
  ?>

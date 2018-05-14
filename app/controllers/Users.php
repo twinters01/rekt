@@ -51,7 +51,7 @@ class Users extends Controller
         $data['username_err'] = 'Please enter username';
       }elseif(strlen($data['username']) < USER_MINUSERNAMELEN)
       {
-        $data['username_err'] = 'Username must be at least '.USER_MINUSERNAMELEN.' characters if you want to use one.';
+        $data['username_err'] = 'Username must be at least '.USER_MINUSERNAMELEN.' characters.';
       }elseif(strlen($data['username']) > USER_MAXUSERNAMELEN)
       {
         $data['username_err'] = 'Username must be at most '.USER_MAXUSERNAMELEN.' characters';

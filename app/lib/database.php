@@ -68,7 +68,17 @@
     //Execute the prepared statements
     public function execute()
     {
-      return $this->stmt->execute();
+      $this->dbh->beginTransaction();
+      if($this->stmt->execute())
+      {
+        //Commit successful transaction
+        $this->dbh->commit();
+        return True;
+      }else{
+        //Rollback unsuccessful transaction
+        $this->dbh->rollback();
+        return False;
+      }
     }
 
     //Get result set as array of objects

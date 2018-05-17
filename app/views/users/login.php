@@ -2,6 +2,7 @@
   <div class='row'>
     <div class='col-md-6 mx-auto'>
       <div class='card card-body bg-light mt-5'>
+        <?php flash('login_request');?>
         <?php flash('register_success');?>
         <h2>Login</h2>
 

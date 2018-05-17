@@ -52,10 +52,4 @@
   {
     return ['name'=>$_SESSION['user_name'],'id'=>$_SESSION['user_id'],'email'=>$_SESSION['user_email']];
   }
-
-  //Gets the logged in user ID
-  function getLoggedInUser()
-  {
-    return $_SESSION['user_id'];
-  }
  ?>

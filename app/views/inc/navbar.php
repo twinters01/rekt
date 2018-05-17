@@ -22,6 +22,12 @@
           <a class="nav-link" href="<?php echo URLROOT;?>">Welcome, <?php echo getUser()['name']?></a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT;?>/friends/list">Friends</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?php echo URLROOT;?>/users/notifications">Notifications</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT;?>/users/logout">Logout</a>
         </li>
         <?php else :?>

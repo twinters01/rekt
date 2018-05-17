@@ -82,5 +82,45 @@ class User
 
     return $this->db->result();
   }
+
+  //Get a user's full friends list
+  public function getFriendsListByUserId($id)
+  {
+    //Create query
+    $this->db->query('SELECT *
+
+                        FROM friendships f
+                        INNER JOIN users friend
+                        ON (f.user1_id = friend.id OR f.user2_id = friend.id)
+                        AND friend.id <> :id
+
+                        WHERE f.user1_id = :id OR f.user2_id = :id');
+
+    //Bind values
+    $this->db->bind(':id',$id);
+
+    return $this->db->resultSet();
+  }
+  
+  public function getFriendshipStatus($user1, $user2)
+  {
+    $this->db->query("SELECT f.id as friendshipId, r.id as requestId, r.sender_id as senderId, r.receiver_id as receiverId
+
+                        FROM friendships f
+                        RIGHT JOIN requests r
+                        ON (r.sender_id = f.user1_id AND r.receiver_id = f.user2_id)
+                          OR (r.receiver_id = f.user1_id AND r.sender_id = f.user2_id)
+
+                        WHERE r.type='f' AND r.status<>'a'
+                          AND ((r.sender_id = :user1 AND r.receiver_id = :user2)
+                                OR (r.sender_id = :user2 AND r.receiver_id = :user1))
+
+                          ORDER BY friendshipId DESC");
+
+    $this->db->bind(':user1', $user1);
+    $this->db->bind(':user2', $user2);
+
+    return $this->db->result();
+  }
 }
  ?>

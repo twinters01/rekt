@@ -5,6 +5,10 @@ class Users extends Controller
   {
     $this->userModel = $this->model('User');
   }
+  public function index()
+  {
+    redirect('404');
+  }
   public function register()
   {
     //Check for request type

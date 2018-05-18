@@ -35,6 +35,15 @@
     }
   }
 
+  //If user is not logged in, redirect
+  function loginOrRedirect()
+  {
+    if(!isLoggedIn())
+    {
+      flashRedirect('/users/login','login_request','Please login.', 'alert alert-danger');
+    }
+  }
+
   //Check if a user is logged in
   function isLoggedIn()
   {

@@ -7,6 +7,11 @@ class Friends extends Controller
     $this->requestModel = $this->model('Request');
   }
 
+  public function index()
+  {
+    redirect('/friends/list');
+  }
+
   public function list()
   {
     $data = [];
@@ -14,7 +19,7 @@ class Friends extends Controller
     //Redirect to login if there is no logged in user
     if(!isLoggedIn())
     {
-      flashRedirect('/users/login','login_request','Please login!','alert alert-danger');
+      flashRedirect('/users/login','login_request','Please login to view friends list.','alert alert-danger');
     }
 
     $data['friends'] = $this->userModel->getFriendsListByUserId(getUser()['id']);
@@ -51,7 +56,7 @@ class Friends extends Controller
         if(empty($friendship))
         {
           //No relationship found, send request
-          if($this->requestModel->sendFriendRequest(['sender_id'=>getUser()['id'],'receiver_id' => $target[0]->id]))
+          if($this->requestModel->createFriendRequest(['sender_id'=>getUser()['id'],'receiver_id' => $target[0]->id]))
           {
             flashRedirect('/friends/list', 'feedback_flash', 'Request sent!', 'alert alert-success');
           } else {

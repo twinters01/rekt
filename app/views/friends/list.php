@@ -8,7 +8,7 @@
           <p> No friends :( </p>
         <?php else:?>
           <?php foreach($data['friends'] as $friend):?>
-            <h1><?php $friend->name;?></h1>
+            <?php require APPROOT.'/views/snippets/friendCard.php';?>
           <?php endforeach;?>
         <?php endif;?>
       </div>

@@ -25,7 +25,7 @@
           <a class="nav-link" href="<?php echo URLROOT;?>/friends/list">Friends</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT;?>/users/notifications">Notifications</a>
+          <a class="nav-link" href="<?php echo URLROOT;?>/requests/list">Requests</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT;?>/users/logout">Logout</a>

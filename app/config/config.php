@@ -20,4 +20,14 @@
   define('USER_MINUSERNAMELEN',4);
   define('USER_MAXUSERNAMELEN',20);
 
+  //Type and status variable definitions
+  define('REQUEST_TYPE_FRIEND','f');
+  define('REQUEST_TYPE_CHALLENGE','c');
+  define('REQUEST_TYPE_REPORT','r');
+
+  define('REQUEST_STATUS_APPROVED','a');
+  define('REQUEST_STATUS_PENDING','p');
+  define('REQUEST_STATUS_IGNORED','i');
+  define('REQUEST_STATUS_REJECTED','r');
+
  ?>

@@ -29,12 +29,14 @@ class Request
                         ON u.id = r.sender_id
 
                         WHERE r.receiver_id = :user
-                        AND r.type = \'f\'
-                        AND r.status <> \'a\'
+                        AND r.type = :type
+                        AND r.status <> :status
 
                         ORDER BY r.status DESC, r.created_date DESC');
 
     $this->db->bind(':user', $userId);
+    $this->db->bind(':type', REQUEST_TYPE_FRIEND);
+    $this->db->bind(':status', REQUEST_STATUS_APPROVED);
 
     return $this->db->resultSet();
   }
@@ -66,8 +68,8 @@ class Request
     return $this->createRequest([
       'sender_id' => $data['sender_id'],
       'receiver_id' => $data['receiver_id'],
-      'type' => 'f', //Friend
-      'status' => 'p' //Pending
+      'type' => REQUEST_TYPE_FRIEND, //Friend
+      'status' => REQUEST_STATUS_PENDING //Pending
     ]);
   }
 
@@ -85,8 +87,9 @@ class Request
 
     if($this->db->execute())
     {
-      $this->db->query('UPDATE requests SET status = \'a\' WHERE id = :requestId');
+      $this->db->query('UPDATE requests SET status = :status WHERE id = :requestId');
       $this->db->bind(':requestId', $requestId);
+      $this->db->bind(':status', REQUEST_STATUS_APPROVED);
       return $this->db->execute();
     }else{
       return False;

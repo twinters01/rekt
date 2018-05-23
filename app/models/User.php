@@ -101,7 +101,7 @@ class User
 
     return $this->db->resultSet();
   }
-  
+
   public function getFriendshipStatus($user1, $user2)
   {
     $this->db->query("SELECT f.id as friendshipId, r.id as requestId, r.sender_id as senderId, r.receiver_id as receiverId
@@ -111,7 +111,7 @@ class User
                         ON (r.sender_id = f.user1_id AND r.receiver_id = f.user2_id)
                           OR (r.receiver_id = f.user1_id AND r.sender_id = f.user2_id)
 
-                        WHERE r.type='f' AND r.status<>'a'
+                        WHERE r.type=':type' AND r.status<>':status'
                           AND ((r.sender_id = :user1 AND r.receiver_id = :user2)
                                 OR (r.sender_id = :user2 AND r.receiver_id = :user1))
 
@@ -119,6 +119,8 @@ class User
 
     $this->db->bind(':user1', $user1);
     $this->db->bind(':user2', $user2);
+    $this->db->bind(':type', REQUEST_TYPE_FRIEND);
+    $this->db->bind(':status', REQUEST_STATUS_APPROVED);
 
     return $this->db->result();
   }

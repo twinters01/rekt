@@ -19,7 +19,7 @@
       <ul class="navbar-nav ml-auto">
         <?php if(isLoggedIn()) : ?>
         <li class="nav-item">
-          <a class="nav-link" href="<?php echo URLROOT;?>">Welcome, <?php echo getUser()['name']?></a>
+          <a class="nav-link" href="<?php echo URLROOT;?>/users/profile">Welcome, <?php echo getUser()['name']?></a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="<?php echo URLROOT;?>/friends/list">Friends</a>

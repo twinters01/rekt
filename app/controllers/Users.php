@@ -195,6 +195,37 @@ class Users extends Controller
     }
   }
 
+  //View a user's profile
+  public function profile($id = NULL)
+  {
+    if($_SERVER['REQUEST_METHOD'] == 'GET')
+    {
+      //Not viewing another user's profile
+      if(is_null($id))
+      {
+        //Make sure a user is logged in
+        loginOrRedirect();
+
+
+        $data = ['user' => $this->userModel->findUserById(getUser()['id']), 'isLoggedInProfile' => True];
+
+        //If the user wasn't found, force a re-login
+        if(empty($data['user']))
+        {
+          flashRedirect('/users/login','login_request','Logged in user could not be found. Please log in and try again.', 'alert alert-danger');
+        }
+
+        consoleLog($data['user']->username);
+
+        //User found, display profile
+        $this->view('users/profile',$data);
+      }
+    } else {
+      //Bad request
+      flashRedirect('400');
+    }
+  }
+
   //Create session variables to login user
   public function createUserSession($user)
   {

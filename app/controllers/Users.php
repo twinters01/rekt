@@ -181,7 +181,12 @@ class Users extends Controller
         $this->view('users/login',$data);
       }
 
-    }else{
+    }else if($_SERVER['REQUEST_METHOD'] == 'GET') {
+      if(isLoggedIn())
+      {
+        redirect('');
+      }
+
       //Init data
       $data=[
         'email' => '',

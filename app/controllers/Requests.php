@@ -16,7 +16,7 @@ class Requests extends Controller
   {
     if($_SERVER['REQUEST_METHOD'] == 'POST')
     {
-      flashRedirect('400');
+      redirect('400');
     } else {
       loginOrRedirect();
 

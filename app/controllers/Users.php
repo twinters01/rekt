@@ -220,8 +220,6 @@ class Users extends Controller
           flashRedirect('/users/login','login_request','Logged in user could not be found. Please log in and try again.', 'alert alert-danger');
         }
 
-        consoleLog($data['user']->username);
-
         //User found, display profile
         $this->view('users/profile',$data);
       }

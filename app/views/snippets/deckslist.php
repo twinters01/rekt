@@ -10,7 +10,7 @@
         <?php endforeach;?>
       <?php endif;?>
       <?php if(isset($data['isLoggedInProfile']) && $data['isLoggedInProfile']):?>
-        <a href='#' class='btn btn-primary' role='button'>Import Deck</a>
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#deckImportModal">Import Deck</button>
       <?php endif;?>
     </div>
   </div>

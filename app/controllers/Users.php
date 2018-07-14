@@ -229,6 +229,55 @@ class Users extends Controller
     }
   }
 
+  public function importDeck()
+  {
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+      //Make sure user is logged in
+      loginOrRedirect();
+
+      header('Content-Type: application/json');
+
+      //Sanitize input data
+      $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+      $errors = [];
+
+      $deck = [
+                'owner' => getUser()['id'],
+                'title' => $_POST['title'],
+                'description' => $_POST['description'],
+                'list' => $_POST['decklist'],
+                'white' => !empty($_POST['white']),
+                'blue' => !empty($_POST['blue']),
+                'black' => !empty($_POST['black']),
+                'red' => !empty($_POST['red']),
+                'green' => !empty($_POST['green'])
+              ];
+
+      //Validations
+      if(strlen($deck['title']) < DECK_MINTITLELEN)
+      {
+        $errors['title'] = "Title must be at least ".DECK_MINTITLELEN." characters long.";
+      }else if(strlen($deck['title']) > DECK_MAXTITLELEN)
+      {
+        $errors['title'] = "Title must be below ".DECK_MAXTITLELEN." characters long.";
+      }
+
+      if(strlen($deck['description']) > DECK_MAXDESCRIPTIONLEN)
+      {
+        $errors['description'] = "Description  must be below ".DECK_MAXDESCRIPTIONLEN." characters long.";
+      }
+
+      if(empty($errors))
+      {
+        echo json_encode($deck);
+      }else{
+        echo json_encode($errors);
+      }
+    }
+  }
+
   //Create session variables to login user
   public function createUserSession($user)
   {

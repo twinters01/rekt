@@ -12,7 +12,7 @@
           </div>
           <div class="form-group">
             <label for="decklist">Import .dec (DeckedBuilder) file OR manually enter list below</label>
-            <input class="form-control" type="file" id="deckImportFileUpload">
+            <input class="form-control" type="file" id="deckImportFileUpload" accept=".dec">
             <textarea class="form-control" id="deckImportDecklist" name="decklist" rows="8" cols="80"></textarea>
           </div>
           <div class="form-group">

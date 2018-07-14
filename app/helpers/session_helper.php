@@ -35,6 +35,15 @@
     }
   }
 
+  //Create session variables to login user
+  function createUserSession($user)
+  {
+    $_SESSION['user_id'] = $user->id;
+    $_SESSION['user_email'] = $user->email;
+    $_SESSION['user_name'] = $user->name;
+    redirect('');
+  }
+
   //If user is not logged in, redirect
   function loginOrRedirect()
   {

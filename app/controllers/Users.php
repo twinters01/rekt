@@ -4,6 +4,7 @@ class Users extends Controller
   public function __construct()
   {
     $this->userModel = $this->model('User');
+    $this->deckModel = $this->model('Deck');
   }
   public function index()
   {
@@ -272,6 +273,15 @@ class Users extends Controller
       if(empty($errors))
       {
         echo json_encode($deck);
+        if(!$this->deckModel->importDeck($deck))
+        {
+          $errors['db'] = "Query unsuccessful";
+          echo json_encode($errors);
+        }else
+        {
+          echo "Success";
+        }
+
       }else{
         echo json_encode($errors);
       }

@@ -230,6 +230,11 @@ class Users extends Controller
     }
   }
 
+  public function test()
+  {
+    consoleLog($this->userModel->findUserById(10000));
+  }
+
   public function importDeck()
   {
     if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -272,14 +277,13 @@ class Users extends Controller
 
       if(empty($errors))
       {
-        echo json_encode($deck);
         if(!$this->deckModel->importDeck($deck))
         {
           $errors['db'] = "Query unsuccessful";
           echo json_encode($errors);
         }else
         {
-          echo "Success";
+          echo json_encode($deck);
         }
 
       }else{

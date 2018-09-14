@@ -8,16 +8,19 @@
         <form id="deckImportForm" action='<?php echo URLROOT; ?>/users/importDeck' method='post'>
           <div class="form-group">
             <label for="title">Title</label>
-            <input class="form-control" type="text" name="title">
+            <input class="form-control" id='title-input' type="text" name="title">
+            <span class='invalid-feedback' id='title-feedback'></span>
           </div>
           <div class="form-group">
             <label for="decklist">Import .dec (DeckedBuilder) file OR manually enter list below</label>
             <input class="form-control" type="file" id="deckImportFileUpload" accept=".dec">
-            <textarea class="form-control" id="deckImportDecklist" name="decklist" rows="8" cols="80"></textarea>
+            <textarea class="form-control" id="decklist-input" name="decklist" rows="8" cols="80"></textarea>
+            <span class='invalid-feedback' id='decklist-feedback'></span>
           </div>
           <div class="form-group">
             <label for="description">Deck description</label>
-            <textarea class="form-control" name="description" rows="8" cols="80" placeholder="Enter a description for your deck"></textarea>
+            <textarea class="form-control" id='description-input' name="description" rows="8" cols="80" placeholder="Enter a description for your deck"></textarea>
+            <span class='invalid-feedback' id='description-feedback'></span>
           </div>
           <div class="form-group">
             <input name="white" type="checkbox" class="checkbox-inline"> White</input>

@@ -272,22 +272,25 @@ class Users extends Controller
 
       if(strlen($deck['description']) > DECK_MAXDESCRIPTIONLEN)
       {
-        $errors['description'] = "Description  must be below ".DECK_MAXDESCRIPTIONLEN." characters long.";
+        $errors['description'] = "Description must be below ".DECK_MAXDESCRIPTIONLEN." characters long.";
       }
+
+      $response = [];
 
       if(empty($errors))
       {
         if(!$this->deckModel->importDeck($deck))
         {
           $errors['db'] = "Query unsuccessful";
-          echo json_encode($errors);
+          $response['errors'] = $errors;
         }else
         {
-          echo json_encode($deck);
+          $response['deck'] = $deck;
         }
-
+        echo json_encode($response);
       }else{
-        echo json_encode($errors);
+        $response['errors'] = $errors;
+        echo json_encode($response);
       }
     }
   }

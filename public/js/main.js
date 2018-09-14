@@ -12,9 +12,8 @@ $(function(){
     //Define the file reader functionality
     let reader = new FileReader();
     reader.onload = function(progressEvent){
-      //TODO find out how to clear the existing file after it is read
-      document.getElementById("deckImportDecklist").value = '';
-      document.getElementById("deckImportDecklist").value = this.result;
+      document.getElementById("decklist-input").value = '';
+      document.getElementById("decklist-input").value = this.result;
     }
 
     //Read the file
@@ -41,11 +40,30 @@ $(function(){
       if(this.status == 200){
         //TODO handle error messages
         console.log(JSON.parse(this.response));
+        var response = JSON.parse(this.response);
 
-        bootstrap_alert('Success!', "alert alert-success");
+        if(!('errors' in response)){
+          bootstrap_alert('Success!', "alert-success");
+          document.getElementById('deckImportForm').reset();
+          document.getElementById('decklist-input').value='';
+        }else{
+          if('db' in response.errors){
+            bootstrap_alert('Internal error, please try again', 'alert-danger');
+          }else {
+            for(var field in response.errors){
+              //Add the error text to the span
+              var target = document.getElementById(field+'-feedback');
+              var text = document.createTextNode(response.errors[field]);
+              target.appendChild(text);
 
-        document.getElementById('deckImportForm').reset();
-        document.getElementById('deckImportDecklist').value='';
+              //Mark the input as invalid
+              target = document.getElementById(field+'-input');
+              target.classList.add('is-invalid');
+            }
+            return;
+          }
+        }
+
         $('#deckImportModal').modal('hide');
       }
     }

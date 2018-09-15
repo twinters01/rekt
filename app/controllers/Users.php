@@ -4,6 +4,7 @@ class Users extends Controller
   public function __construct()
   {
     $this->userModel = $this->model('User');
+    $this->deckModel = $this->model('Deck');
   }
   public function index()
   {
@@ -212,7 +213,7 @@ class Users extends Controller
         loginOrRedirect();
 
 
-        $data = ['user' => $this->userModel->findUserById(getUser()['id']), 'isLoggedInProfile' => True];
+        $data = ['user' => $this->userModel->findUserById(getUser()['id']), 'isLoggedInProfile' => True, 'decks' => $this->deckModel->findDecksByUserId(getUser()['id'])];
 
         //If the user wasn't found, force a re-login
         if(empty($data['user']))
@@ -220,14 +221,77 @@ class Users extends Controller
           flashRedirect('/users/login','login_request','Logged in user could not be found. Please log in and try again.', 'alert alert-danger');
         }
 
-        consoleLog($data['user']->username);
-
         //User found, display profile
         $this->view('users/profile',$data);
       }
     } else {
       //Bad request
       flashRedirect('400');
+    }
+  }
+
+  public function test()
+  {
+    consoleLog($this->userModel->findUserById(10000));
+  }
+
+  public function importDeck()
+  {
+    if($_SERVER['REQUEST_METHOD'] == 'POST')
+    {
+      //Make sure user is logged in
+      loginOrRedirect();
+
+      header('Content-Type: application/json');
+
+      //Sanitize input data
+      $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+      $errors = [];
+
+      $deck = [
+                'owner' => getUser()['id'],
+                'title' => $_POST['title'],
+                'description' => $_POST['description'],
+                'list' => $_POST['decklist'],
+                'white' => !empty($_POST['white']),
+                'blue' => !empty($_POST['blue']),
+                'black' => !empty($_POST['black']),
+                'red' => !empty($_POST['red']),
+                'green' => !empty($_POST['green'])
+              ];
+
+      //Validations
+      if(strlen($deck['title']) < DECK_MINTITLELEN)
+      {
+        $errors['title'] = "Title must be at least ".DECK_MINTITLELEN." characters long.";
+      }else if(strlen($deck['title']) > DECK_MAXTITLELEN)
+      {
+        $errors['title'] = "Title must be below ".DECK_MAXTITLELEN." characters long.";
+      }
+
+      if(strlen($deck['description']) > DECK_MAXDESCRIPTIONLEN)
+      {
+        $errors['description'] = "Description must be below ".DECK_MAXDESCRIPTIONLEN." characters long.";
+      }
+
+      $response = [];
+
+      if(empty($errors))
+      {
+        if(!$this->deckModel->importDeck($deck))
+        {
+          $errors['db'] = "Query unsuccessful";
+          $response['errors'] = $errors;
+        }else
+        {
+          $response['deck'] = $deck;
+        }
+        echo json_encode($response);
+      }else{
+        $response['errors'] = $errors;
+        echo json_encode($response);
+      }
     }
   }
 

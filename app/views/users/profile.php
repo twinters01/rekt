@@ -1,5 +1,7 @@
 <?php require APPROOT.'/views/inc/header.php';?>
 
+  <div id='alert_placeholder'></div>
+
     <?php
       $presentingUser = $data['user'];
       require APPROOT.'/views/snippets/user/basicInfo.php';
@@ -10,3 +12,4 @@
     ?>
 
 <?php require APPROOT.'/views/inc/footer.php';?>
+<?php require APPROOT.'/views/snippets/modals/deckImportModal.php';?>

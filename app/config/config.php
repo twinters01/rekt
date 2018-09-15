@@ -14,11 +14,15 @@
   //App version
   define('APPVERSION','1.0.0');
 
-  //Other configs
+  //User settings
   define('USER_MINPASSLEN',6);
   define('USER_MAXPASSLEN',20);
   define('USER_MINUSERNAMELEN',4);
   define('USER_MAXUSERNAMELEN',20);
+
+  define('DECK_MINTITLELEN',6);
+  define('DECK_MAXTITLELEN',30);
+  define('DECK_MAXDESCRIPTIONLEN',500);
 
   //Type and status variable definitions
   define('REQUEST_TYPE_FRIEND','f');

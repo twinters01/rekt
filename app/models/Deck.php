@@ -11,6 +11,18 @@ class Deck
   ///////////////////////
   //WRITE
   ///////////////////////
+  public function findDecksByUserId($userId)
+  {
+    $this->db->query('SELECT * FROM decks WHERE owner=:owner');
+
+    $this->db->bind(':owner', $userId);
+
+    return $this->db->resultSet();
+  }
+
+  ///////////////////////
+  //WRITE
+  ///////////////////////
   public function importDeck($deck)
   {
     $this->db->query('INSERT INTO decks(owner,title,description,list,white,blue,black,red,green)

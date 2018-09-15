@@ -213,7 +213,7 @@ class Users extends Controller
         loginOrRedirect();
 
 
-        $data = ['user' => $this->userModel->findUserById(getUser()['id']), 'isLoggedInProfile' => True];
+        $data = ['user' => $this->userModel->findUserById(getUser()['id']), 'isLoggedInProfile' => True, 'decks' => $this->deckModel->findDecksByUserId(getUser()['id'])];
 
         //If the user wasn't found, force a re-login
         if(empty($data['user']))
